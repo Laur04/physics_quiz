@@ -23,10 +23,7 @@ def quiz(request):
             unordered_list = list()
             for profile in score_dict:
                 unordered_list.append((score_dict[profile], profile))
-            ordered_list = list()
-            while unordered_list:
-                ordered_list.append(max(unordered_list))
-                unordered_list.remove(max(unordered_list))
+            ordered_list = sorted(unordered_list)
             final_ordered_list = list()
             count = 0
             for item in ordered_list:
