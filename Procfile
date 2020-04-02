@@ -1,1 +1,1 @@
-web: gunicorn physics_question.wsgi --log-file -
+web: gunicorn physics_quiz.wsgi --log-file -
