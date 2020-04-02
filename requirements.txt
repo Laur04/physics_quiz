@@ -2,4 +2,4 @@ django
 gunicorn
 django-heroku
 django-multiselectfield
-pil
+Pillow
