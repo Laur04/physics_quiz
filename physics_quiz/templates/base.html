@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang='en'>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>STEP UP Physics Lessons</title>
+        <meta name='author' content='Lauren Delwiche'>
+
+        {% block head %}{% endblock %}
+        <style>
+            .header {
+                background-color: rgb(24, 82, 103);
+            }
+            .header_img {
+                padding:7px;
+                width:100px;;
+            }
+            .header_title {
+                color:white;
+                text-align:center;
+                font-size: 25px;
+                padding-top: 25px;
+            }
+            .col-md-5.header_title {
+                padding-left:30px;
+            }
+            #footer {
+                padding-right:30px;
+                padding-top:10px;
+                padding-bottom:10px;
+                color:black;
+                background-color: rgb(24, 82, 103);
+            }
+            .credit {
+                color:black;
+            }
+            .credit:hover {
+                color:grey;
+                text-decoration: none;
+            }
+        </style>
+    </head>
+    <body>
+        {% block root %}
+            <div class='' id='root' style="background: #FFFFFF;">
+                <div class='row header'>
+                    <div class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
+                        <img class='header_img' src="{% static 'logo.png' %}" alt='STEP UP logo'/>
+                    </div>
+                    <div class='col-lg-4 col-md-4 col-sm-2 col-xs-2'></div>
+                    <div class='col-lg-5 col-md-5 col-sm-7 col-xs-8'>
+                        <h1 class='header_title'>Careers Matching Quiz</h1>
+                    </div>
+                </div>
+                {% block main %}{% endblock %}
+                <div id='footer'>
+                    <p style='text-align:right;'>Created by <a href='https://www.linkedin.com/in/lauren-delwiche-518638197' class='credit'>Lauren Delwiche</a></p>
+                </div>
+            </div>
+        {% endblock %}
+    </body>
+</html>
