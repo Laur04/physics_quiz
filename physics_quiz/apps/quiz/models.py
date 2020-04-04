@@ -5,7 +5,7 @@ from multiselectfield import MultiSelectField
 class Profile(models.Model):
 
     q1_choices = ((1, 'Making money'), (2, 'Helping other people'), (3, 'Having job security'), (4, 'Working with people'), (5, 'Having lots of family time'), (6, 'Having an exciting job'), (7, 'Making use of my talents/abilities'))
-    q2_choices = ((1, 'Medicine/Health'), (2, 'Biology'), (3, 'Chemistry'), (4, 'Physics'), (5, 'Astronomy'), (6, 'Engineering'), (7, 'English/Writing'), (8, 'Finance/Business/Consultancy'), (9, 'Administration/Management'), (10, 'Arts/Media'), (11, 'Academia/Education'))
+    q2_choices = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'))
 
     name = models.CharField('Name', unique=True, max_length=100)
     job = models.CharField('Job Title', max_length=100)
