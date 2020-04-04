@@ -8,6 +8,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>STEP UP Physics Lessons</title>
         <meta name='author' content='Lauren Delwiche'>
+        <link rel="icon" href="{% static 'logo.png' %}">
 
         {% block head %}{% endblock %}
         <style>
@@ -16,16 +17,15 @@
             }
             .header_img {
                 padding:7px;
-                width:100px;;
+                width:100px;
+                display: inline-block;
             }
             .header_title {
                 color:white;
                 text-align:center;
                 font-size: 25px;
                 padding-top: 25px;
-            }
-            .col-md-5.header_title {
-                padding-left:30px;
+                display: inline-block;
             }
             #footer {
                 padding-right:30px;
@@ -41,18 +41,36 @@
                 color:grey;
                 text-decoration: none;
             }
+            .header_nav {
+                padding-top: 25px;
+                padding-left: 20px;
+                color: white;
+                font-size: 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+            }
+            .header_nav:hover {
+                text-decoration: none;
+                color:grey;
+            }
         </style>
     </head>
     <body>
         {% block root %}
             <div class='' id='root' style="background: #FFFFFF;">
                 <div class='row header'>
-                    <div class='col-lg-3 col-md-3 col-sm-3 col-xs-12'>
-                        <img class='header_img' src="{% static 'logo.png' %}" alt='STEP UP logo'/>
+                    <div class='col-lg-5 col-md-6 col-sm-12 col-xs-12' style='text-align:center;'>
+                        <a href="https://engage.aps.org/stepup/home" target="_blank">
+                            <img class='header_img' src="{% static 'logo.png' %}" alt='STEP UP logo'/>
+                            <h1 class='header_title'>Careers Matching Quiz</h1>
+                        </a>
                     </div>
-                    <div class='col-lg-4 col-md-4 col-sm-2 col-xs-2'></div>
-                    <div class='col-lg-5 col-md-5 col-sm-7 col-xs-8'>
-                        <h1 class='header_title'>Careers Matching Quiz</h1>
+                    <div class='col-lg-2 col-md-1'></div>
+                    <div class='col-lg-5 col-md-5 col-sm-12 col-xs-12' style='text-align: center;'>
+                        <a href="{% url 'home:index' %}"><h3 class='header_nav'>Lesson</h3></a>
+                        <a href="{% url 'quiz:listing' %}"><h3 class='header_nav'>Profiles</h3></a>
+                        <a href="{% url 'quiz:quiz' %}"><h3 class='header_nav'>Quiz</h3></a>
                     </div>
                 </div>
                 {% block main %}{% endblock %}

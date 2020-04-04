@@ -29,36 +29,26 @@
         .profile_description {
             color:black;
         }
-        .button {
-            width:25%;
-            margin-top:10px;
-            font-size:120%;
-            background-color: #9bc1b4;
-        }
     </style>
 {% endblock %}
 
 {% block main %}
     <div class='row'>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
-            <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'> 
+            <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>   
                 {% for i in profiles %}
                     <div class='row'>
                         <div class='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
-                            <img class='profile_img' src='{{ i.0.image.url }}' alt='Profile picture'/>
+                            <img class='profile_img' src='{{ i.image.url }}' alt='Profile picture'/>
                         </div>
                         <div class='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
-                            <p class='profile_name'>{{ i.0 }} - {{ i.0.job }}</p>
-                            <a href='{{ i.0.link }}'><p class='profile_link'>Learn More</p></a>
-                            <p class='profile_description'>{{ i.0.description }}</p>
-                            <div style="text-align: left;">
-                                <p class='profile_description' style='display:inline-block;'>Common Interests: {{ i.1 }}</p>
-                            </div>
+                            <p class='profile_name'>{{ i }} - {{ i.job }}</p>
+                            <a href='{{ i.link }}'><p class='profile_link'>Learn More</p></a>
+                            <p class='profile_description'>{{ i.description }}</p>
                         </div>
                     </div>
                     <hr>
                 {% endfor %}
-                <a href="{% url 'quiz:quiz' %}"><button class='button'>Redo Quiz</button></a>
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>
