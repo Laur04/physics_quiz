@@ -58,7 +58,11 @@
                     </div>
                     <hr>
                 {% endfor %}
-                <a href="{% url 'quiz:quiz' %}"><button class='button'>Redo Quiz</button></a>
+                <div class='row'>
+                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                        <a href="{% url 'quiz:survey' %}"><button class='button'>Redo Survey</button></a>
+                    </div>
+                </div>
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>

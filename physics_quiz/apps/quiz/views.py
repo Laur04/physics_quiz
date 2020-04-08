@@ -8,7 +8,7 @@ from .models import Profile
 
 import random
 
-def quiz(request):
+def survey(request):
     if request.method == 'POST':
         form = QuizForm(request.POST)
         if form.is_valid():
