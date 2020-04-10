@@ -41,29 +41,29 @@
 {% block main %}
     <div class='row'>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
-            <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'> 
-                {% for i in profiles %}
-                    <div class='row'>
-                        <div class='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
-                            <img class='profile_img' src='{{ i.0.image.url }}' alt='Profile picture'/>
-                        </div>
-                        <div class='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
-                            <p class='profile_name'>{{ i.0 }} - {{ i.0.job }}</p>
-                            <a href='{{ i.0.link }}'><p class='profile_link'>Learn More</p></a>
-                            <p class='profile_description'>{{ i.0.description }}</p>
-                            <div style="text-align: left;">
-                                <p class='profile_description' style='display:inline-block;'>Common Interests: {{ i.1 }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <hr>
-                {% endfor %}
+        <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>
+            {% for i in profiles %}
                 <div class='row'>
-                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-                        <a href="{% url 'quiz:survey' %}"><button class='button'>Redo Survey</button></a>
+                    <div class='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
+                        <img class='profile_img' src='{{ i.0.image.url }}' alt='Profile picture'/>
+                    </div>
+                    <div class='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
+                        <p class='profile_name'>{{ i.0 }} - {{ i.0.job }}</p>
+                        <a href='{{ i.0.link }}'><p class='profile_link'>Learn More</p></a>
+                        <p class='profile_description'>{{ i.0.description }}</p>
+                        <div style="text-align: left;">
+                            <p class='profile_description' style='display:inline-block;'>Common Interests: {{ i.1 }}</p>
+                        </div>
                     </div>
                 </div>
+                <hr>
+            {% endfor %}
+            <div class='row'>
+                <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                    <a href="{% url 'quiz:survey' %}"><button class='button'>Redo Survey</button></a>
+                </div>
             </div>
+        </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
