@@ -1,12 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.db.models import Q
 
 from .forms import QuizForm
-from .models import Profile, Option
+from .models import Profile, Option, Answer
 
 import random
+import csv
 
 def survey(request):
     if request.method == 'POST':
@@ -29,6 +30,11 @@ def survey(request):
                 for related in q2_ans:
                     opt = Option.objects.get(name=str(ans))
                     opt.increment(str(related))
+            
+            # update for csv file
+            back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education'}
+            new_ans = Answer(ans=back_dict[str(q1_ans[0])] + ',' + back_dict[str(q1_ans[1])] + ',' + back_dict[str(q1_ans[2])] + ',' + back_dict[str(q2_ans[0])] + ',' + back_dict[str(q2_ans[1])])
+            new_ans.save()
             
             # calculate results
             ans_dict = {}
@@ -74,36 +80,32 @@ def listing(request):
 
 def statistics(request):
     opts = Option.objects.all()
+    if request.method == 'POST':
+        for o in opts:
+            o.reset()
+        answers = Answer.objects.all()
+        for a in answers:
+            a.delete()
+        return HttpResponseRedirect(reverse('quiz:statistics'))
+    else:
+        # count self
+        self_counts_q1 = list()
+        self_counts_q2 = list()
+        num = 0
+        for o in opts:
+            if num < 11:
+                self_counts_q1.append(o.self_count(o.name))
+            else:
+                self_counts_q2.append(o.self_count(o.name))
+            num += 1
 
-    # count self
-    self_counts_q1 = list()
-    self_counts_q2 = list()
-    num = 0
-    for o in opts:
-        if num < 7:
-            self_counts_q2.append(o.self_count(o.name))
-        else:
-            self_counts_q1.append(o.self_count(o.name))
-        num += 1
+        ctx = {'self_counts_q1':self_counts_q1, 'self_counts_q2':self_counts_q2}
+        return render(request, 'quiz/stats.html', context=ctx)
 
-    # other stats
-    q1_to_q1 = list()
-    q1_to_q2 = list()
-    q2_to_q1 = list()
-    q2_to_q2 = list()
-    for o in opts:
-        if o.name in ['1', '2', '3', '4', '5', '6', '7']:
-            q1_to_q1.append(o.compare_to_q1(o.name))
-            q1_to_q2.append(o.compare_to_q2(o.name))
-        elif o.name in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']:
-            q2_to_q1.append(o.compare_to_q1(o.name))
-            q2_to_q2.append(o.compare_to_q2(o.name))
-
-    ctx = {'self_counts_q1':self_counts_q1, 'self_counts_q2':self_counts_q2, 'q1_to_q1':q1_to_q1, 'q2_to_q2':q2_to_q2, 'q2_to_q1':q2_to_q1, 'q1_to_q2':q1_to_q2}
-    return render(request, 'quiz/stats.html', context=ctx)
-
-def reset(response):
-    opt = Option.objects.all()
-    for o in opt:
-        o.reset()
-    return HttpResponseRedirect(reverse('home:index'))
+def getfile(request):
+    response = HttpResponse(content_type='text/csv')  
+    response['Content-Disposition'] = 'attachment; filename="answer_stats.csv"'
+    writer = csv.writer(response)
+    for a in Answer.objects.all():
+        writer.writerow(a.ans) 
+    return response

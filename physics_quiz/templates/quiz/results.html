@@ -48,12 +48,12 @@
                         <img class='profile_img' src='{{ i.0.image.url }}' alt='Profile picture'/>
                     </div>
                     <div class='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
-                        <p class='profile_name'>{{ i.0 }} - {{ i.0.job }}</p>
+                        <p class='profile_name' style='text-decoration:underline;'>{{ i.0 }} - {{ i.0.job }}</p>
+                        <div style="text-align: left;">
+                            <b><p class='profile_description' style='display:inline-block;'>Common Interests: {{ i.1 }}</p></b>
+                        </div>
                         <a href='{{ i.0.link }}'><p class='profile_link'>Learn More</p></a>
                         <p class='profile_description'>{{ i.0.description }}</p>
-                        <div style="text-align: left;">
-                            <p class='profile_description' style='display:inline-block;'>Common Interests: {{ i.1 }}</p>
-                        </div>
                     </div>
                 </div>
                 <hr>

@@ -135,39 +135,8 @@ class Option(models.Model):
         answers = {'a':('Medicine/Health', self.o_a), 'b':('Biology', self.o_b), 'c':('Chemistry', self.o_c), 'd':('Physics', self.o_d), 'e':('Astronomy', self.o_e), 'f':('Engineering', self.o_f), 'g':('English/Writing', self.o_g), 'h':('Finance/Business/Consultancy', self.o_h), 'i':('Administration/Management', self.o_i), 'j':('Arts/Media', self.o_j), 'k':('Academia/Education', self.o_k), '1':('Making money', self.o_1), '2':('Helping other people', self.o_2), '3':('Having job security', self.o_3), '4':('Working with people', self.o_4), '5':('Having lots of family time', self.o_5), '6':('Having an exciting job', self.o_6), '7': ('Making use of my talents/abilities', self.o_7)}
         return answers[who]
 
-    def compare_to_q1(self, who):
-        who = str(who)
-        ans = list()
-        answers_alt = {'a':('Medicine/Health', self.o_a), 'b':('Biology', self.o_b), 'c':('Chemistry', self.o_c), 'd':('Physics', self.o_d), 'e':('Astronomy', self.o_e), 'f':('Engineering', self.o_f), 'g':('English/Writing', self.o_g), 'h':('Finance/Business/Consultancy', self.o_h), 'i':('Administration/Management', self.o_i), 'j':('Arts/Media', self.o_j), 'k':('Academia/Education', self.o_k)}
-        answers = {'1':('Making money', self.o_1), '2':('Helping other people', self.o_2), '3':('Having job security', self.o_3), '4':('Working with people', self.o_4), '5':('Having lots of family time', self.o_5), '6':('Having an exciting job', self.o_6), '7': ('Making use of my talents/abilities', self.o_7)}
-        for a in answers:
-            if a != who and answers[a][1] != 0:
-                ans.append(answers[a])
-        if ans:
-            sorted_ans = sorted(ans, key=lambda ans: ans[1], reverse=True)
-        else:
-            sorted_ans = list()
-        if who in ['1', '2', '3', '4', '5', '6', '7']:
-            return (answers[who][0], sorted_ans)
-        else:
-            return (answers_alt[who][0], sorted_ans)
-
-    def compare_to_q2(self, who):
-        who = str(who)
-        answers_alt = {'1':('Making money', self.o_1), '2':('Helping other people', self.o_2), '3':('Having job security', self.o_3), '4':('Working with people', self.o_4), '5':('Having lots of family time', self.o_5), '6':('Having an exciting job', self.o_6), '7': ('Making use of my talents/abilities', self.o_7)}
-        answers = {'a':('Medicine/Health', self.o_a), 'b':('Biology', self.o_b), 'c':('Chemistry', self.o_c), 'd':('Physics', self.o_d), 'e':('Astronomy', self.o_e), 'f':('Engineering', self.o_f), 'g':('English/Writing', self.o_g), 'h':('Finance/Business/Consultancy', self.o_h), 'i':('Administration/Management', self.o_i), 'j':('Arts/Media', self.o_j), 'k':('Academia/Education', self.o_k)}
-        ans = list()
-        for a in answers:
-            if a != who and answers[a][1] != 0:
-                ans.append(answers[a])
-        if ans:
-            sorted_ans = sorted(ans, key=lambda ans: ans[1], reverse=True)
-        else:
-            sorted_ans = list()
-        if who in ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k']:
-            return (answers[who][0], sorted_ans)
-        else:
-            return (answers_alt[who][0], sorted_ans)
-
     def __str__(self):
         return str(self.name)
+
+class Answer(models.Model):
+    ans = models.CharField(max_length=200)

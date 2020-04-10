@@ -21,71 +21,94 @@
             background-color:#9bc1b4;
         }
     </style>
+    <script>
+        window.onload = function () {
+
+        var chart = new CanvasJS.Chart("chartContainer2", {
+            animationEnabled: true,
+            title:{
+                text: "Question 2 Answers",
+                horizontalAlign: "left"
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 60,
+                //innerRadius: 60,
+                indexLabelFontSize: 17,
+                indexLabel: "{label} - {y}",
+                toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                dataPoints: [
+                    { y: parseInt('{{ self_counts_q1.0.1 }}'), label: "{{ self_counts_q1.0.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.1.1 }}'), label: "{{ self_counts_q1.1.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.2.1 }}'), label: "{{ self_counts_q1.2.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.3.1 }}'), label: "{{ self_counts_q1.3.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.4.1 }}'), label: "{{ self_counts_q1.4.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.5.1 }}'), label: "{{ self_counts_q1.5.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.6.1 }}'), label: "{{ self_counts_q1.6.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.7.1 }}'), label: "{{ self_counts_q1.7.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.8.1 }}'), label: "{{ self_counts_q1.8.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.9.1 }}'), label: "{{ self_counts_q1.9.0 }}" },
+                    { y: parseInt('{{ self_counts_q1.10.1 }}'), label: "{{ self_counts_q1.10.0 }}" },
+                ]
+            }]
+        });
+        chart.render();
+
+        var chart = new CanvasJS.Chart("chartContainer1", {
+            animationEnabled: true,
+            title:{
+                text: "Question 1 Answers",
+                horizontalAlign: "left"
+            },
+            data: [{
+                type: "doughnut",
+                startAngle: 60,
+                //innerRadius: 60,
+                indexLabelFontSize: 17,
+                indexLabel: "{label} - {y}",
+                toolTipContent: "<b>{label}:</b> {y} (#percent%)",
+                dataPoints: [
+                    { y: parseInt('{{ self_counts_q2.0.1 }}'), label: "{{ self_counts_q2.0.0 }}" },
+                    { y: parseInt('{{ self_counts_q2.1.1 }}'), label: "{{ self_counts_q2.1.0 }}" },
+                    { y: parseInt('{{ self_counts_q2.2.1 }}'), label: "{{ self_counts_q2.2.0 }}" },
+                    { y: parseInt('{{ self_counts_q2.3.1 }}'), label: "{{ self_counts_q2.3.0 }}" },
+                    { y: parseInt('{{ self_counts_q2.4.1 }}'), label: "{{ self_counts_q2.4.0 }}" },
+                    { y: parseInt('{{ self_counts_q2.5.1 }}'), label: "{{ self_counts_q2.5.0 }}" },
+                    { y: parseInt('{{ self_counts_q2.6.1 }}'), label: "{{ self_counts_q2.6.0 }}" },
+                ]
+            }]
+        });
+        chart.render();
+        }
+    </script>
 {% endblock %}
 
 {% block main %}
     <div class='main1'>
-        <h3 style='text-align:center;padding:10px;'>Frequency of Answers</h3>
         <div class='row' style='padding-left:15px'>
-            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
-                <h5 style='text-align:left;padding:5px;text-decoration:underline;'>Q1 Answers:</h5>
-                {% for o in self_counts_q1 %}
-                    <p style='text-align:left'><b>{{ o.0 }}:</b> {{ o.1 }}</p>
-                {% endfor %}
+            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                <div id="chartContainer1" style="height: 370px; width: 95%;margin-top:10px;"></div>
             </div>
-            <div class='col-lg-6 col-md-6 col-sm-6 col-xs-12'>
-                <h5 style='text-align:left;padding:5px;text-decoration:underline;'>Q2 Answers:</h5>
-                {% for o in self_counts_q2 %}
-                    <p style='text-align:left'><b>{{ o.0 }}:</b> {{ o.1 }}</p>
-                {% endfor %}
+            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+                <div id="chartContainer2" style="height: 370px; width: 95%;margin-top:10px;"></div>
             </div>
-        </div>
-    </div>
-    <div class='row' style='padding-left:15px'>
-        <div class='main2 col-lg-6 col-md-12 col-sm-12 col-xs-12'>
-            <h3 style='text-align:center;padding:10px;'>Question 1 Statistics</h3>
-            <h5 style='text-align:left;padding:5px;text-decoration:underline;'>Common Q1 Answers Given:</h5>
-            {% for o in q1_to_q1 %}
-                {% if o.1 %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   {{ o.1.0.0 }}, {{ o.1.1.0 }}, {{ o.1.2.0 }}</p>
-                {% else %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   No data available</p>
-                {% endif %}
-            {% endfor %}
-            <h5 style='text-align:left;padding:5px;text-decoration:underline;'>Common Q2 Answers Given:</h5>
-            {% for o in q1_to_q2 %}
-                {% if o.1 %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   {{ o.1.0.0 }}, {{ o.1.1.0 }}, {{ o.1.2.0 }}</p>
-                {% else %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   No data available</p>
-                {% endif %}
-            {% endfor %}
-        </div>
-        <div class='main3 col-lg-6 col-md-12 col-sm-12 col-xs-12'>
-            <h3 style='text-align:center;padding:10px;'>Question 2 Statistics</h3>
-            <h5 style='text-align:left;padding:5px;text-decoration:underline;'>Common Q1 Answers Given:</h5>
-            {% for o in q2_to_q1 %}
-                {% if o.1 %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   {{ o.1.0.0 }}, {{ o.1.1.0 }}, {{ o.1.2.0 }}</p>
-                {% else %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   No data available</p>
-                {% endif %}
-            {% endfor %}
-            <h5 style='text-align:left;padding:5px;text-decoration:underline;'>Common Q2 Answers Given:</h5>
-            {% for o in q2_to_q2 %}
-                {% if o.1 %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   {{ o.1.0.0 }}, {{ o.1.1.0 }}, {{ o.1.2.0 }}</p>
-                {% else %}
-                    <p style='text-align:left;padding-left:5px;'><b>{{ o.0 }}:</b>   No data available</p>
-                {% endif %}
-            {% endfor %}
         </div>
     </div>
     <div class='row' style='text-align:center;background-color:rgba(138, 84, 168, .6);'>
         <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <a href="{% url 'quiz:reset' %}" onclick="return confirm('Are you sure that you want to delete all statistics? You will be redirected back to the home page.')"><button class='button'>Reset Data</button></a>
+            <a href="{% url 'quiz:getfile' %}"><button class='button'>Download CSV</button></a>
         </div>
     </div>
+    <div class='row' style='text-align:center;background-color:rgba(138, 84, 168, .6);'>
+        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+            <form action='' method='post'>
+                {% csrf_token %}
+                <input class='button' onclick="return confirm('Are you sure that you want to delete all statistics?')" type='submit' name='Submit' value='Reset Data'/>    
+            </form>
+        </div>
+    </div>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>

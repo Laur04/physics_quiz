@@ -48,13 +48,17 @@
                     {% elif form.errors %}
                         <p class='errors'>{{ form.errors }}</p>
                     {% endif %}
-                    <p class='question'>Mark the three most important factors for your future career satisfaction.</p>
+                    <p class='question'>Mark the <b>THREE</b> most important factors for your future career satisfaction.</p>
                     <div class='choices'>{{ form.question_1}}</div>
                     <br>
-                    <p class='question'>Mark two areas you are most interested in.</p>
+                    <p class='question'>Mark <b>TWO</b> areas you are most interested in.</p>
                     <div class='choices'>{{ form.question_2 }}</div>
-                    <input class='button' type='submit' name='Submit' value='Get My Results!'/>    
                 </form>
+                <div class='row'>
+                    <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
+                        <input class='button' type='submit' name='Submit' value='Get Results!'/>  
+                    </div>
+                </div>
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>
