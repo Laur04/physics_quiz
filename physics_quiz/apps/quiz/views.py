@@ -107,5 +107,6 @@ def getfile(request):
     response['Content-Disposition'] = 'attachment; filename="answer_stats.csv"'
     writer = csv.writer(response)
     for a in Answer.objects.all():
-        writer.writerow(a.ans) 
+        new_list = a.ans.split(', ')
+        writer.writerow(new_list) 
     return response
