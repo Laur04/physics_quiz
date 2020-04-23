@@ -49,7 +49,7 @@ class Profile(models.Model):
         return common_word
 
     def pic_name(self):
-        a = self.name.lower()
+        a = self.name
         a = self.split(' ')
         return a[0][0] + '_' + a[len(a) - 1] + '.png'
 
