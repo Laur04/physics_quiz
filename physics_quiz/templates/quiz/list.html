@@ -39,8 +39,7 @@
                 {% for i in profiles %}
                     <div class='row'>
                         <div class='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
-                            {{ i.pic_name }}
-                            <img class='profile_img' src='{% static "a_porter.png" %}' alt='Profile picture'/>
+                            <img class='profile_img' src='{% static i.pic_name %}' alt='Profile picture'/>
                         </div>
                         <div class='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
                             <p class='profile_name'>{{ i }} - {{ i.job }}</p>
