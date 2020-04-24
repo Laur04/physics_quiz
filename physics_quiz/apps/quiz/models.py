@@ -50,8 +50,7 @@ class Profile(models.Model):
 
     def pic_name(self):
         a = self.name.lower()
-        a = self.split(' ')
-        return a[0] + '_' + a[len(a) - 1] + '.png'
+        return a
 
 class Option(models.Model):
     answers = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'), ('1', 'Making money'), ('2', 'Helping other people'), ('3', 'Having job security'), ('4', 'Working with people'), ('5', 'Having lots of family time'), ('6', 'Having an exciting job'), ('7', 'Making use of my talents/abilities'))
