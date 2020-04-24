@@ -45,7 +45,7 @@
             {% for i in profiles %}
                 <div class='row'>
                     <div class='col-lg-5 col-md-12 col-sm-12 col-xs-12'>
-                        <img class='profile_img' src='{{ i.0.image.url }}' alt='Profile picture'/>
+                        <img class='profile_img' src='{% static i.pic_name %}' alt='Profile picture'/>
                     </div>
                     <div class='col-lg-7 col-md-12 col-sm-12 col-xs-12'>
                         <p class='profile_name' style='text-decoration:underline;'>{{ i.0 }} - {{ i.0.job }}</p>
