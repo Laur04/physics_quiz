@@ -20,19 +20,19 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
-
+# SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = 'qwertyuiop'
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
 
 # Application definition
 
 INSTALLED_APPS = [
     'physics_quiz.apps.home',
     'physics_quiz.apps.quiz',
+    'physics_quiz.apps.classroom',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -117,6 +117,29 @@ USE_L10N = True
 
 USE_TZ = True
 
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+EMAIL_HOST = 'smtp.gmail.com'
+
+EMAIL_PORT = 587
+
+EMAIL_HOST_USER = 'stepuplessons@gmail.com'
+
+EMAIL_HOST_PASSWORD = 'badPASSWORD1!'
+
+# EMAIL_HOST_PASSWORD = os.environ['EMAIL_PASSWORD']
+
+EMAIL_USE_TLS = True
+
+EMAIL_USE_SSL = False
+
+DEFAULT_FROM_EMAIL  = 'stepuplessons@gmail.com'
+
+LOGIN_REDIRECT_URL = "/"
+
+LOGIN_URL = "/login"
+
+LOGOUT_REDIRECT_URL = "/"
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

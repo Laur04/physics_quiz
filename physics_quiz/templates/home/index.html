@@ -19,12 +19,15 @@
             padding-top:40px;
         }
         .button {
-            width:65%;
+            width:100%;
             padding:10px;
             margin-top:40px;
             margin-bottom:30px;
             font-size:120%;
             background-color: #9bc1b4;
+        }
+        p {
+            padding-top: 10px;
         }
     </style>
 {% endblock %}
@@ -34,10 +37,28 @@
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
             <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>
                 <h1 class='welcome'>Welcome to the Physics Career Matching Lesson!</h1>
-                <p style='padding-top:10px;'>This survey is a tool to use with the STEP UP Careers in Physics Lesson.  It will ask you to think about your goals, interests, and what is important to you for a career.  After taking this survey, this tool will find profiles of people with physics degrees and their jobs that you might not have considered for yourself.</p>
-                <p>After taking the survey if you want to see all of the career profiles click on the “see all profiles" link at the top of the page.</p>
-                <!-- <img class='ref_img' src="{% static 'reference.png' %}" alt='Quick reference guide'/> -->
-                <a href="{% url 'quiz:survey' %}"><button class='button'>Start Career Matching!</button></a>
+                <p>This survey is a tool to use with the STEP UP Careers in Physics Lesson.  It will ask you to think about your goals, interests, and what is important to you for a career.  After taking this survey, this tool will find profiles of people with physics degrees and their jobs that you might not have considered for yourself.</p>
+                <p>After taking the survey if you want to see all of the career profiles click on the “Profiles" link at the top of the page.</p>
+                <p>If your teacher has asked you to, login into the classroom with the credentials they gave you to create your own physics profile.</p>
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <a href="{% url 'quiz:survey' %}"><button class='button'>Start Career Matching!</button></a>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        {% if user.is_authenticated %}
+                            {% if user.is_staff %}
+                                <a href="{% url 'login' %}"><button class='button'>Login to Class</button></a>
+                            {% else %}
+                                <a href="{% url 'classroom:classroom' %}"><button class='button'>Go to Class</button></a>
+                            {% endif %}
+                        {% else %}
+                            <a href="{% url 'classroom:classroom' %}"><button class='button'>Login to Class</button></a>
+                        {% endif %}
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                        <a href="{% url 'classroom:create' %}"><button class='button'>Create Class</button></a>
+                    </div>
+                </div>
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>

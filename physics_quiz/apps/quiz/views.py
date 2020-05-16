@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
 from django.urls import reverse
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required, permission_required
 
 from .forms import QuizForm
 from .models import Profile, Option, Answer
@@ -78,35 +79,45 @@ def listing(request):
     random.shuffle(profiles)
     return render(request, 'quiz/list.html', context={'profiles':profiles})
 
+@login_required
 def statistics(request):
-    opts = Option.objects.all()
-    if request.method == 'POST':
-        for o in opts:
-            o.reset()
-        answers = Answer.objects.all()
-        for a in answers:
-            a.delete()
-        return HttpResponseRedirect(reverse('quiz:statistics'))
+    user = request.user
+    if user.username == "site_superuser" or user.username == "site_staff":
+        opts = Option.objects.all()
+        if request.method == 'POST':
+            for o in opts:
+                o.reset()
+            answers = Answer.objects.all()
+            for a in answers:
+                a.delete()
+            return HttpResponseRedirect(reverse('quiz:statistics'))
+        else:
+            # count self
+            self_counts_q1 = list()
+            self_counts_q2 = list()
+            num = 0
+            for o in opts:
+                if num < 11:
+                    self_counts_q1.append(o.self_count(o.name))
+                else:
+                    self_counts_q2.append(o.self_count(o.name))
+                num += 1
+
+            ctx = {'self_counts_q1':self_counts_q1, 'self_counts_q2':self_counts_q2}
+            return render(request, 'quiz/stats.html', context=ctx)
     else:
-        # count self
-        self_counts_q1 = list()
-        self_counts_q2 = list()
-        num = 0
-        for o in opts:
-            if num < 11:
-                self_counts_q1.append(o.self_count(o.name))
-            else:
-                self_counts_q2.append(o.self_count(o.name))
-            num += 1
+        return HttpResponse("You are not authorized to view this page.")
 
-        ctx = {'self_counts_q1':self_counts_q1, 'self_counts_q2':self_counts_q2}
-        return render(request, 'quiz/stats.html', context=ctx)
-
+@login_required
 def getfile(request):
-    response = HttpResponse(content_type='text/csv')  
-    response['Content-Disposition'] = 'attachment; filename="answer_stats.csv"'
-    writer = csv.writer(response)
-    for a in Answer.objects.all():
-        new_list = a.ans.split(', ')
-        writer.writerow(new_list) 
-    return response
+    user = request.user
+    if user.username == "site_superuser" or user.username == "site_staff":
+        response = HttpResponse(content_type='text/csv')  
+        response['Content-Disposition'] = 'attachment; filename="answer_stats.csv"'
+        writer = csv.writer(response)
+        for a in Answer.objects.all():
+            new_list = a.ans.split(', ')
+            writer.writerow(new_list) 
+        return response
+    else:
+        return HttpResponse("You are not authorized to view this page.")
