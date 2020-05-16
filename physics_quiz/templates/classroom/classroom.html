@@ -26,6 +26,9 @@
             font-size:120%;
             background-color: #9bc1b4;
         }
+        .question {
+            text-align: left;
+        }
     </style>
 {% endblock %}
 
@@ -34,19 +37,28 @@
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
             <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>
                 {% if person == "student" %}
-                    <a href="{% url 'classroom:response' %}"><button class='button'>Write Response</button></a>
+                    <a href="{% url 'classroom:response' %}"><button class='button'>Create Profile</button></a>
                     <hr>
-                    <p style="font-size:20;">The posts from your fellow classmates will appear below as your teacher makes them available.</p>
+                    <p style="font-size:20;">The profiles from your fellow classmates will appear below as your teacher makes them available.</p>
                     <hr>
                 {% endif %}
                 {% if person == "teacher" %}
-                    <p style="font-size:20;">The posts from your students will appear below and you will have the option to make them available for students to see.</p>
+                    <p style="font-size:20;">The profiles from your students will appear below and you will have the option to make them available for students to see.</p>
                     <hr>
                 {% endif %}
                 {% for item in post_list %}
                     <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <p style='text-align:left;'><b>Post:</b> {{ item }}</p>
+                            <p class='question'><b>Name:</b> {{ item.name }}</p>
+                            <p class='question'><b>Position:</b> {{ item.position }}</p>
+                            <p class='question'><b>Company:</b> {{ item.company }}</p>
+                            <p class='question'><b>Work Location:</b> {{ item.location }}</p>
+                            <p class='question'><b>College:</b> {{ item.school }}</p>
+                            <p class='question'><b>Degree:</b> {{ item.degree }}</p>
+                            <p class='question'><b>Experience:</b> {{ item.experience }}</p>
+                            <p class='question'><b>Education:</b> {{ item.education }}</p>
+                            <p class='question'><b>Skills:</b> {{ item.skills }}</p>
+                            <p class='question'><b>Endorsements:</b> {{ item.endorsements }}</p>                            
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             {% if person == "teacher" and item.hidden == True %}

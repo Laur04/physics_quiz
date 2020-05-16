@@ -61,9 +61,22 @@ def response(request):
         form = SurveyForm(request.POST)
         if form.is_valid():
             find_class = Classes.objects.get(name=classname)
-            new_id = form.cleaned_data['ans'].split(' ')
-            new_id = ''.join(new_id)[:40]
-            new_post = Post(post_id=new_id, answer=form.cleaned_data['ans'], classes=find_class)
+            new_id = form.cleaned_data['name'] + form.cleaned_data['position'] + form.cleaned_data['location']
+            new_id = new_id.split()
+            new_id = "".join(new_id)[:40]
+            new_post = Post(
+                post_id=new_id,
+                name=form.cleaned_data['name'],
+                position=form.cleaned_data['position'],
+                company=form.cleaned_data['company'],
+                location=form.cleaned_data['location'],
+                school=form.cleaned_data['school'],
+                degree=form.cleaned_data['degree'],
+                experience=form.cleaned_data['experience'],
+                education=form.cleaned_data['education'],
+                skills=form.cleaned_data['skills'],
+                endorsements=form.cleaned_data['endorsements'],
+                classes=find_class)
             new_post.save()
             return HttpResponseRedirect(reverse('classroom:classroom'))
         return render(request, 'classroom/survey.html', context={'form':form})

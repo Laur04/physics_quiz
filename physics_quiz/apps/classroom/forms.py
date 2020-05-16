@@ -9,4 +9,13 @@ class CreateForm(forms.Form):
     student_password = forms.CharField(max_length=30, required=True)
 
 class SurveyForm(forms.Form):
-    ans = forms.CharField(widget=forms.Textarea, max_length=10000)
+    name = forms.CharField(max_length=80, required=True)
+    position = forms.CharField(max_length=80, required=True)
+    company = forms.CharField(max_length=80, required=True)
+    location = forms.CharField(max_length=80, required=True)
+    school = forms.CharField(max_length=80, required=True)
+    degree = forms.CharField(max_length=80, required=True)
+    experience = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
+    education = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
+    skills = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
+    endorsements = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
