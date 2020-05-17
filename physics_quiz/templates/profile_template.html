@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link href="profile_template.css" rel="stylesheet">
+        <style>
+            html body article#competences section#education::before {
+                background: no-repeat center {{ color }};
+                background-size: 50%;
+                content: '';
+                display: inline-block;
+                float: left;
+                height: 2cm;
+                margin-right: .5cm;
+                vertical-align: middle;
+                width: 2cm; 
+            }
+            html body article#competences section#experience::before {
+                background: no-repeat center {{ color }};
+                background-size: 50%;
+                content: '';
+                display: inline-block;
+                float: left;
+                height: 2cm;
+                margin-right: .5cm;
+                vertical-align: middle;
+                width: 2cm; 
+            }
+            html body article#competences section#skills::before {
+                background: no-repeat center {{ color }};
+                background-size: 50%;
+                content: '';
+                display: inline-block;
+                float: left;
+                height: 2cm;
+                margin-right: .5cm;
+                vertical-align: middle;
+                width: 2cm; 
+            }
+            html body article#competences section#endorsements::before {
+                background: no-repeat center {{ color }};
+                background-size: 50%;
+                content: '';
+                display: inline-block;
+                float: left;
+                height: 2cm;
+                margin-right: .5cm;
+                vertical-align: middle;
+                width: 2cm; 
+            }
+        </style>
+    </head>
+
+    <body>
+        <article id="competences">
+            <div style="text-align:center;">
+                <img src="{{ profile_pic.url }}" />
+            </div>
+
+            <h3 style="background:{{ color }};">
+                <b>{{ name }}</b>
+                <br>
+                {{ position }} at {{ company }}
+                <br>
+                {{ location }}
+            </h3>
+
+            <section id="education">
+                <h4>Education:</h4>
+                <p>
+                {{ degree }} from {{ school }}
+                </p>
+            </section>
+
+            <section id="experience">
+                <h4>Experience:</h4>
+                <p>
+                {{ experience }}
+                </p>
+            </section>
+
+            <section id="skills">
+                <h4>Skills:</h4>
+                <p>
+                {{ skills }}
+                </p>
+            </section>
+
+            <section id="endorsements">
+                <h4>Endorsements:</h4>
+                <p>
+                {{ endorsements }}
+                </p>
+            </section>
+        </article>
+    </body>
+</html>
