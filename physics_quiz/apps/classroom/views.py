@@ -121,7 +121,7 @@ def response(request):
             s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
             bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
             obj = bucket.Object("user_profiles/" + filename)
-            obj.upload_file(HTML(string=html_string).write_pdf(filename))
+            obj.upload_file(HTML(string=html_string.write_pdf(filename)))
 
             return HttpResponseRedirect(reverse('classroom:classroom'))
         return render(request, 'classroom/survey.html', context={'form':form, 'error': True})
