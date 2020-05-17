@@ -9,6 +9,8 @@ class CreateForm(forms.Form):
     student_password = forms.CharField(max_length=30, required=True)
 
 class SurveyForm(forms.Form):
+    COLOR_CHOICES = ((1, 'red'), (2, 'blue'), (3, 'purple'), (4, 'yellow'), (5, 'green'))
+
     name = forms.CharField(max_length=80, required=True)
     position = forms.CharField(max_length=80, required=True)
     company = forms.CharField(max_length=80, required=True)
@@ -16,6 +18,15 @@ class SurveyForm(forms.Form):
     school = forms.CharField(max_length=80, required=True)
     degree = forms.CharField(max_length=80, required=True)
     experience = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
-    education = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
     skills = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
     endorsements = forms.CharField(max_length=400, required=True, widget=forms.Textarea)
+    profile_pic = forms.ImageField(required=True)
+    background_color = forms.ChoiceField(choices=COLOR_CHOICES, required=True)
+
+class StudentResetForm(forms.Form):
+    new_password1 = forms.CharField(max_length=30, required=True)
+    new_password2 = forms.CharField(max_length=30, required=True)
+
+    def is_valid(self):
+        valid = super(StudentResetForm, self).is_valid()
+        return self.cleaned_data["new_password1"] == self.cleaned_data["new_password2"]

@@ -3,6 +3,8 @@ gunicorn
 django-heroku
 django-multiselectfield
 Pillow
-whitenoise
 python-dotenv
 dj-database-url
+django-storages
+boto3==1.13.11
+weasyprint

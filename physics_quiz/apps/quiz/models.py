@@ -48,11 +48,6 @@ class Profile(models.Model):
             common_word.append(back_dict[num])
         return common_word
 
-    def pic_name(self):
-        a = self.name.lower()
-        b = a.split()
-        return b[0][0] + '_' + b[len(b) - 1] + '.png'
-
 class Option(models.Model):
     answers = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'), ('1', 'Making money'), ('2', 'Helping other people'), ('3', 'Having job security'), ('4', 'Working with people'), ('5', 'Having lots of family time'), ('6', 'Having an exciting job'), ('7', 'Making use of my talents/abilities'))
 

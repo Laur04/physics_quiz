@@ -11,21 +11,14 @@ class Classes(models.Model):
         
 class Post(models.Model):
     post_id = models.CharField(max_length=40)
-    name = models.CharField(max_length=80)
-    position = models.CharField(max_length=80)
-    company = models.CharField(max_length=80)
-    location = models.CharField(max_length=80)
-    school = models.CharField(max_length=80)
-    degree = models.CharField(max_length=80)
-    experience = models.CharField(max_length=400)
-    education = models.CharField(max_length=400)
-    skills = models.CharField(max_length=400)
-    endorsements = models.CharField(max_length=400)
+    student_name = models.CharField(max_length=80)
     hidden = models.BooleanField(default=True)
     classes = models.ForeignKey(Classes, on_delete=models.CASCADE)
+    pdf = models.CharField(max_length=300)
+    student_pic = models.ImageField(upload_to="student_pic/")
 
     def __str__(self):
-        return self.answer
+        return self.student_name
 
     def changeStatus(self):
         if self.hidden == True:

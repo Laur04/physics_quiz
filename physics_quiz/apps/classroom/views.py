@@ -4,9 +4,15 @@ from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from django.core.files import File
+from django.conf import settings
+from django.template.loader import render_to_string
 
-from .forms import CreateForm, SurveyForm
+from .forms import CreateForm, SurveyForm, StudentResetForm
 from .models import Classes, Post
+
+from weasyprint import HTML, CSS
+import boto3
 
 def create(request):
     if request.method == 'POST':
@@ -48,6 +54,24 @@ def create(request):
         return render(request, 'classroom/create.html', context={'form':form})
 
 @login_required
+def reset_student(request):
+    user = request.user
+    if user.groups.filter(name="teacher").exists():
+        if request.method == "POST":
+            form = StudentResetForm(request.POST)
+            if form.is_valid():
+                student = user.class_teacher.student
+                student.set_password(form.cleaned_data['new_password1'])
+                student.save()
+                return render(request, "registration/password_reset_complete.html", context={})
+            return render(request, "classroom/password_reset.html", context={'form':form})
+        else:
+            form = StudentResetForm()
+            return render(request, "classroom/password_reset.html", context={'form':form})
+    else:
+        return HttpResponse("You are not authorized to access this page.")
+
+@login_required
 def response(request):
     user = request.user
     classname = ""
@@ -58,28 +82,52 @@ def response(request):
     else:  # user is trying to access as staff or superuser
         return HttpResponse("You are trying to access this page as a superuser or administrator. Please login as a teacher or student.")
     if request.method == 'POST':
-        form = SurveyForm(request.POST)
+        form = SurveyForm(request.POST, request.FILES)
         if form.is_valid():
             find_class = Classes.objects.get(name=classname)
+
             new_id = form.cleaned_data['name'] + form.cleaned_data['position'] + form.cleaned_data['location']
             new_id = new_id.split()
             new_id = "".join(new_id)[:40]
+            
+            class_string = str(classname)
+            filename = "".join(form.cleaned_data["name"].split()) + "_" + class_string + "_Profile.pdf"
+
             new_post = Post(
+                student_name=form.cleaned_data['name'],
                 post_id=new_id,
-                name=form.cleaned_data['name'],
-                position=form.cleaned_data['position'],
-                company=form.cleaned_data['company'],
-                location=form.cleaned_data['location'],
-                school=form.cleaned_data['school'],
-                degree=form.cleaned_data['degree'],
-                experience=form.cleaned_data['experience'],
-                education=form.cleaned_data['education'],
-                skills=form.cleaned_data['skills'],
-                endorsements=form.cleaned_data['endorsements'],
-                classes=find_class)
+                pdf=settings.MEDIA_URL + "user_profiles/" + filename,
+                classes=find_class,
+                student_pic=form.cleaned_data['profile_pic']
+            )
             new_post.save()
+            
+            colors = ["red", "blue", "purple", "yellow", "green"]
+
+            html_string = render_to_string('profile_template.html', {
+                'name': form.cleaned_data["name"],
+                'position': form.cleaned_data["position"],
+                'company': form.cleaned_data["company"],
+                'location': form.cleaned_data["location"],
+                'school': form.cleaned_data["school"],
+                'degree': form.cleaned_data["degree"],
+                'experience': form.cleaned_data["experience"],
+                'skills': form.cleaned_data["skills"],
+                'endorsements': form.cleaned_data["endorsements"],
+                'profile_pic': new_post.student_pic,
+                'color': colors[int(form.cleaned_data["background_color"]) + 1]
+                })
+            css_string = render_to_string('profile_template.css')
+            css = CSS(string=css_string)
+            pdf = HTML(string=html_string).write_pdf(filename, stylesheets=[css])
+            
+            s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
+            bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
+            obj = bucket.Object("user_profiles/" + filename)
+            obj.upload_file(filename)
+
             return HttpResponseRedirect(reverse('classroom:classroom'))
-        return render(request, 'classroom/survey.html', context={'form':form})
+        return render(request, 'classroom/survey.html', context={'form':form, 'error': True})
     else:
         form = SurveyForm()
         return render(request, 'classroom/survey.html', context={'form':form})

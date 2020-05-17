@@ -20,7 +20,7 @@
             padding-top:40px;
         }
         .button {
-            width:65%;
+            width:100%;
             padding:10px;
             margin-top:40px;
             margin-bottom:30px;
@@ -42,20 +42,24 @@
     <div class='row'>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
             <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>
-                <form action='' method='post'>
+                <form action='' method='post' enctype="multipart/form-data">
                     {% csrf_token %}
                     <p class='question'>Name:  {{ form.name }}</p>
-                    <p class='question'>Position:  {{ form.position }}</p>
                     <p class='question'>Company:  {{ form.company }}</p>
+                    <p class='question'>Position:  {{ form.position }}</p>
+                    <p class='question'>Profile Picture:  {{ form.profile_pic }}</p>
+                    <p class='question'>Background Color:  {{ form.background_color }}</p>
                     <p class='question'>Work Location:  {{ form.location }}</p>
                     <p class='question'>College:  {{ form.school }}</p>
                     <p class='question'>Degree:  {{ form.degree }}</p>
                     <p class='question'>Experience:  {{ form.experience }}</p>
-                    <p class='question'>Education:  {{ form.education }}</p>
                     <p class='question'>Skills:  {{ form.skills }}</p>
                     <p class='question'>Endorsements:  {{ form.endorsements }}</p>
                     <input class='button' type='submit' name='Submit' value='Submit'/> 
                 </form>
+                {% if error %}
+                    <p>{{ form.errors }}</p>
+                {% endif %}
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>

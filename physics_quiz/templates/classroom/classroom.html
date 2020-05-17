@@ -20,14 +20,15 @@
             padding-top:40px;
         }
         .button {
-            width:65%;
+            width:100%;
             padding:10px;
             margin:5px;
             font-size:120%;
             background-color: #9bc1b4;
         }
         .question {
-            text-align: left;
+            text-align: center;
+            font-size: 27px;
         }
     </style>
 {% endblock %}
@@ -49,28 +50,28 @@
                 {% for item in post_list %}
                     <div class="row">
                         <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <p class='question'><b>Name:</b> {{ item.name }}</p>
-                            <p class='question'><b>Position:</b> {{ item.position }}</p>
-                            <p class='question'><b>Company:</b> {{ item.company }}</p>
-                            <p class='question'><b>Work Location:</b> {{ item.location }}</p>
-                            <p class='question'><b>College:</b> {{ item.school }}</p>
-                            <p class='question'><b>Degree:</b> {{ item.degree }}</p>
-                            <p class='question'><b>Experience:</b> {{ item.experience }}</p>
-                            <p class='question'><b>Education:</b> {{ item.education }}</p>
-                            <p class='question'><b>Skills:</b> {{ item.skills }}</p>
-                            <p class='question'><b>Endorsements:</b> {{ item.endorsements }}</p>                            
+                            <a class='question' href="{{ item.pdf }}" target="_blank"><p style="padding-top:18px;"><b>{{ item.student_name }}'s Profile</b></p></a>                          
                         </div>
                         <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
                             {% if person == "teacher" and item.hidden == True %}
-                                <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Post to Student</button></a>
+                                <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Post to Students</button></a>
                             {% endif %}
                             {% if person == "teacher" and item.hidden == False %}
-                                <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Hide from Student</button></a>
+                                <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Hide from Students</button></a>
                             {% endif %}
                         </div>
                     </div>
                     <hr>
                 {% endfor %}
+                {% if person == "teacher" %}
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-3"></div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-xs-112">
+                            <a href="{% url 'classroom:reset_student' %}"><button class='button'>Reset Student Password</button></a>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-3"></div>
+                    </div>
+                {% endif %}
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
     </div>
