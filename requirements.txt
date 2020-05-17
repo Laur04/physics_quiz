@@ -8,3 +8,5 @@ dj-database-url
 django-storages
 boto3==1.13.11
 weasyprint
+cairocffi>=0.9.0
+setuptools>=39.2.0

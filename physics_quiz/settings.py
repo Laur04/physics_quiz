@@ -140,6 +140,8 @@ LOGIN_URL = "/login"
 
 LOGOUT_REDIRECT_URL = "/"
 
+django_heroku.settings(locals())
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
