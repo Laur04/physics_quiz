@@ -119,7 +119,7 @@ def response(request):
                 'color': colors[int(form.cleaned_data["background_color"]) + 1]
                 })
             
-            pdf = default_storage.save("user_profiles/" + filename, File(open(filename, 'w')))
+            pdf = default_storage.save("user_profiles/" + filename, open(filename, 'w'))
             HTML(string=html_string).write_pdf(pdf.name)
             # s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
             # bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
