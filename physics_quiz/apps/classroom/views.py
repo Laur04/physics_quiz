@@ -5,6 +5,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from django.core.files import File
+from django.core.files.storage import FileSystemStorage
 from django.conf import settings
 from django.template.loader import render_to_string
 
@@ -118,10 +119,12 @@ def response(request):
                 'color': colors[int(form.cleaned_data["background_color"]) + 1]
                 })
             
+            pdf = FileSystemStorage()
+            pdf_file = pdf.save(filename, File(HTML(string=html_string.write_pdf(filename))))
             s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
             bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
             obj = bucket.Object("user_profiles/" + filename)
-            obj.upload_file(HTML(string=html_string.write_pdf(filename)))
+            obj.upload_file(pdf_file)
 
             return HttpResponseRedirect(reverse('classroom:classroom'))
         return render(request, 'classroom/survey.html', context={'form':form, 'error': True})
