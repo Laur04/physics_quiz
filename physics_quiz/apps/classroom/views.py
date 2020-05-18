@@ -13,7 +13,7 @@ from .forms import CreateForm, SurveyForm, StudentResetForm
 from .models import Classes, Post
 
 from weasyprint import HTML
-import boto3
+import tempfile
 
 def create(request):
     if request.method == 'POST':
@@ -91,40 +91,24 @@ def response(request):
             new_id = new_id.split()
             new_id = "".join(new_id)[:40]
             
-            class_string = str(classname)
-            filename = "".join(form.cleaned_data["name"].split()) + "_" + class_string + "_Profile.pdf"
-
-            new_post = Post(
-                student_name=form.cleaned_data['name'],
-                post_id=new_id,
-                pdf=settings.MEDIA_URL + "user_profiles/" + filename,
-                classes=find_class,
-                student_pic=form.cleaned_data['profile_pic']
-            )
-            new_post.save()
-            
             colors = ["red", "blue", "purple", "yellow", "green"]
 
-            html_string = render_to_string('profile_template.html', {
-                'name': form.cleaned_data["name"],
-                'position': form.cleaned_data["position"],
-                'company': form.cleaned_data["company"],
-                'location': form.cleaned_data["location"],
-                'school': form.cleaned_data["school"],
-                'degree': form.cleaned_data["degree"],
-                'experience': form.cleaned_data["experience"],
-                'skills': form.cleaned_data["skills"],
-                'endorsements': form.cleaned_data["endorsements"],
-                'profile_pic': new_post.student_pic,
-                'color': colors[int(form.cleaned_data["background_color"]) + 1]
-                })
-            
-            pdf = default_storage.save("user_profiles/" + filename, open(filename, 'w'))
-            HTML(string=html_string).write_pdf(pdf.name)
-            # s3 = boto3.resource('s3', aws_access_key_id=settings.AWS_ACCESS_KEY_ID, aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY)
-            # bucket = s3.Bucket(settings.AWS_STORAGE_BUCKET_NAME)
-            # obj = bucket.Object("media/user_profiles/" + filename)
-            # obj.upload_file(pdf)
+            new_post = Post(
+                name=form.cleaned_data['name'],
+                post_id=new_id,
+                classes=find_class,
+                profile_pic=form.cleaned_data['profile_pic'],
+                position=form.cleaned_data['position'],
+                company=form.cleaned_data['company'],
+                location=form.cleaned_data['location'],
+                school=form.cleaned_data['school'],
+                degree=form.cleaned_data['degree'],
+                experience=form.cleaned_data['experience'],
+                skills=form.cleaned_data['skills'],
+                endorsements=form.cleaned_data['endorsements'],
+                background_color=colors[int(form.cleaned_data["background_color"]) + 1],
+            )
+            new_post.save()
 
             return HttpResponseRedirect(reverse('classroom:classroom'))
         return render(request, 'classroom/survey.html', context={'form':form, 'error': True})
@@ -161,3 +145,32 @@ def changestatus(request, post):
     to_change.changeStatus()
     return HttpResponseRedirect(reverse('classroom:classroom'))
 
+@login_required
+def view_pdf(request, post):
+    post = Post.objects.get(post_id=post)
+    html_string = render_to_string('profile_template.html', {
+        'name': post.name,
+        'position': post.position,
+        'company': post.company,
+        'location': post.location,
+        'school': post.school,
+        'degree': post.degree,
+        'experience': post.experience,
+        'skills': post.skills,
+        'endorsements': post.endorsements,
+        'profile_pic': post.profile_pic,
+        'color': post.background_color,
+        })
+    
+    pdf = HTML(string=html_string).write_pdf()
+
+    response = HttpResponse(content_type='application/pdf;')
+    response['Content-Disposition'] = 'attachment; filename=student_profile.pdf'
+    response['Content-Transfer-Encoding'] = 'binary'
+    with tempfile.NamedTemporaryFile(delete=True) as output:
+        output.write(pdf)
+        output.flush()
+        output = open(output.name, 'rb')
+        response.write(output.read())
+
+    return response

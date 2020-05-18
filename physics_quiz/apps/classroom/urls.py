@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^response/$', views.response, name='response'),
     url(r'^changestatus/(?P<post>\w+)/$', views.changestatus, name='changestatus'),
     url(r'^reset/student/$', views.reset_student, name='reset_student'),
+    url(r'^view/(?P<post>\w+)/$', views.view_pdf, name='view_pdf'),
 ]
