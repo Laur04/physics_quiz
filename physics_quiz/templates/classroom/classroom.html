@@ -37,33 +37,25 @@
     <div class='row'>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
             <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>
-                {% if person == "student" %}
-                    <a href="{% url 'classroom:response' %}"><button class='button'>Create Profile</button></a>
-                    <hr>
-                    <p style="font-size:20;">The profiles from your fellow classmates will appear below as your teacher makes them available.</p>
-                    <hr>
-                {% endif %}
                 {% if person == "teacher" %}
                     <p style="font-size:20;">The profiles from your students will appear below and you will have the option to make them available for students to see.</p>
                     <hr>
-                {% endif %}
-                {% for item in post_list %}
-                    <div class="row">
-                        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
-                            <a class='question' href="{% url 'classroom:view_pdf' item.post_id %}" target="_blank"><p style="padding-top:18px;"><b>{{ item.name }}'s Profile</b></p></a>                          
+                    {% for item in post_list %}
+                        <div class="row">
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+                                <a class='question' href="{% url 'classroom:view_pdf' item.post_id %}" target="_blank"><p style="padding-top:18px;"><b>{{ item.name }}'s Profile</b></p></a>                          
+                            </div>
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+                                {% if item.hidden == True %}
+                                    <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Post to Students</button></a>
+                                {% endif %}
+                                {% if item.hidden == False %}
+                                    <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Hide from Students</button></a>
+                                {% endif %}
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
-                            {% if person == "teacher" and item.hidden == True %}
-                                <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Post to Students</button></a>
-                            {% endif %}
-                            {% if person == "teacher" and item.hidden == False %}
-                                <a href="{% url 'classroom:changestatus' item.post_id %}"><button class='button'>Hide from Students</button></a>
-                            {% endif %}
-                        </div>
-                    </div>
-                    <hr>
-                {% endfor %}
-                {% if person == "teacher" %}
+                        <hr>
+                    {% endfor %}
                     <div class="row">
                         <div class="col-lg-4 col-md-4 col-sm-3"></div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-xs-112">
@@ -71,6 +63,20 @@
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-3"></div>
                     </div>
+                {% endif %}
+                {% if person == "student" %}
+                    <a href="{% url 'classroom:response' %}"><button class='button'>Create Profile</button></a>
+                    <hr>
+                    <p style="font-size:20;">The profiles from your fellow classmates will appear below as your teacher makes them available.</p>
+                    <hr>
+                    {% for item in post_list %}
+                        <div class="row">
+                            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                <a class='question' href="{% url 'classroom:view_pdf' item.post_id %}" target="_blank"><p style="padding-top:18px;"><b>{{ item.name }}'s Profile</b></p></a>                          
+                            </div>
+                        </div>
+                        <hr>
+                    {% endfor %}
                 {% endif %}
             </div>
         <div class='col-lg-1 col-md-1 col-sm-1'></div>
