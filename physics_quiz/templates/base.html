@@ -74,12 +74,15 @@
                     </div>
                     <div class='col-lg-2 col-md-1'></div>
                     <div class='col-lg-5 col-md-5 col-sm-12 col-xs-12' style='text-align: center;'>
+                        <a href="{% url 'quiz:listing' %}"><h3 class='header_nav'>Profiles</h3></a>
+                        <a href="{% url 'quiz:survey' %}"><h3 class='header_nav'>Survey</h3></a>
+                        <a href="{% url 'classroom:classroom' %}"><h3 class='header_nav'>Classroom</h3></a>
                         <div class="dropdown" style="display:inline-block;">
                             <button class="btn dropdown-toggle" data-toggle="dropdown" style="color:white;">
                                 <i class="fas fa-user"></i>
                                 <span class="caret"></span>
                             </button>
-                            <div class="dropdown-menu" style="text-align:left;background-color:rgba(24, 82, 103, .9);color:white;">
+                            <div class="dropdown-menu dropdown-menu-right" style="text-align:left;background-color:rgba(24, 82, 103, .9);color:white;">
                                 {% if user.is_authenticated %}
                                     <ul><h3 style="color:white;" class="drop-item">{{ user.username }}</h3></ul>
                                     {% with class_name=user.groups.all.0|stringformat:"s" %}
@@ -97,9 +100,6 @@
                                 {% endif %}
                             </div>
                         </div>
-                        <a href="{% url 'quiz:listing' %}"><h3 class='header_nav'>Profiles</h3></a>
-                        <a href="{% url 'quiz:survey' %}"><h3 class='header_nav'>Survey</h3></a>
-                        <a href="{% url 'classroom:classroom' %}"><h3 class='header_nav'>Classroom</h3></a>
                     </div>
                 </div>
                 {% block main %}
