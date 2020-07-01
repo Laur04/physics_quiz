@@ -99,9 +99,9 @@ def statistics(request):
             num = 0
             for o in opts:
                 if o.name.isalpha():
-                    self_counts_q2.append(o.self_count(o.name))
-                else:
                     self_counts_q1.append(o.self_count(o.name))
+                else:
+                    self_counts_q2.append(o.self_count(o.name))
                 num += 1
 
             ctx = {'self_counts_q1':self_counts_q1, 'self_counts_q2':self_counts_q2}
