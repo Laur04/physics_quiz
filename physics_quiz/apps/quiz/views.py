@@ -98,10 +98,10 @@ def statistics(request):
             self_counts_q2 = list()
             num = 0
             for o in opts:
-                if num < 11:
-                    self_counts_q1.append(o.self_count(o.name))
-                else:
+                if o.name.isalpha():
                     self_counts_q2.append(o.self_count(o.name))
+                else:
+                    self_counts_q1.append(o.self_count(o.name))
                 num += 1
 
             ctx = {'self_counts_q1':self_counts_q1, 'self_counts_q2':self_counts_q2}
