@@ -48,8 +48,11 @@
                     {% elif form.errors %}
                         <p class='errors'>{{ form.errors }}</p>
                     {% endif %}
+                    <p class='question'>In what role are you doing this career matching?</p>
+                    <div class='choices'>{{ form.question_type }}</div>
+                    <br>
                     <p class='question'>Mark the <b>THREE</b> most important factors for your future career satisfaction.</p>
-                    <div class='choices'>{{ form.question_1}}</div>
+                    <div class='choices'>{{ form.question_1 }}</div>
                     <br>
                     <p class='question'>Mark <b>TWO</b> areas you are most interested in.</p>
                     <div class='choices'>{{ form.question_2 }}</div>

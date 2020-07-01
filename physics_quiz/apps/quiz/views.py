@@ -16,26 +16,27 @@ def survey(request):
         if form.is_valid():
             q1_ans, q2_ans = form.process()
 
-            # update backend info
-            for ans in q1_ans:
-                for related in q1_ans:
-                    opt = Option.objects.get(name=str(ans))
-                    opt.increment(str(related))
-                for related in q2_ans:
-                    opt = Option.objects.get(name=str(ans))
-                    opt.increment(str(related))
-            for ans in q2_ans:
-                for related in q1_ans:
-                    opt = Option.objects.get(name=str(ans))
-                    opt.increment(str(related))
-                for related in q2_ans:
-                    opt = Option.objects.get(name=str(ans))
-                    opt.increment(str(related))
-            
-            # update for csv file
-            back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education'}
-            new_ans = Answer(ans=back_dict[str(q1_ans[0])] + ',' + back_dict[str(q1_ans[1])] + ',' + back_dict[str(q1_ans[2])] + ',' + back_dict[str(q2_ans[0])] + ',' + back_dict[str(q2_ans[1])])
-            new_ans.save()
+            if form.cleaned_data['question_type'] == '0':  # if the user is a student
+                # update backend info
+                for ans in q1_ans:
+                    for related in q1_ans:
+                        opt = Option.objects.get(name=str(ans))
+                        opt.increment(str(related))
+                    for related in q2_ans:
+                        opt = Option.objects.get(name=str(ans))
+                        opt.increment(str(related))
+                for ans in q2_ans:
+                    for related in q1_ans:
+                        opt = Option.objects.get(name=str(ans))
+                        opt.increment(str(related))
+                    for related in q2_ans:
+                        opt = Option.objects.get(name=str(ans))
+                        opt.increment(str(related))
+                
+                # update for csv file
+                back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education'}
+                new_ans = Answer(ans=back_dict[str(q1_ans[0])] + ',' + back_dict[str(q1_ans[1])] + ',' + back_dict[str(q1_ans[2])] + ',' + back_dict[str(q2_ans[0])] + ',' + back_dict[str(q2_ans[1])])
+                new_ans.save()
             
             # calculate results
             ans_dict = {}

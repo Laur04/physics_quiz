@@ -4,9 +4,11 @@ class QuizForm(forms.Form):
 
     q1_choices = ((1, 'Making money'), (2, 'Helping other people'), (3, 'Having job security'), (4, 'Working with people'), (5, 'Having lots of family time'), (6, 'Having an exciting job'), (7, 'Making use of my talents/abilities'))
     q2_choices = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'))
+    type_choices = ((0, 'Student'), (1, 'Workshop Attendee'))
 
     question_1 = forms.MultipleChoiceField(error_messages={'required': 'You must select exactly three items for Question 1.'}, widget = forms.CheckboxSelectMultiple, choices=q1_choices)
     question_2 = forms.MultipleChoiceField(error_messages={'required': 'You must select exactly two items for Question 2.'}, widget = forms.CheckboxSelectMultiple, choices=q2_choices)
+    question_type = forms.ChoiceField(choices=type_choices, required=True)
 
     def is_valid(self):
         valid = super(QuizForm, self).is_valid()
