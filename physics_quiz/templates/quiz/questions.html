@@ -1,67 +1,31 @@
-{% extends "base.html" %}
+{% extends "base_with_head.html" %}
 
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        .main {
-            padding:20px;
-            background-color: rgba(138, 84, 168, .6);
-            text-decoration: none;
-            text-align: center;
-        }
-        .question {
-            font-size: 110%;
-            font-weight: bold;
-            text-align: left;
-        }
-        .choices {
-            text-align: left;
-        }
-        .button {
-            width:100%;
-            margin-top:10px;
-            font-size:120%;
-            background-color: #9bc1b4;
-        }
-        ul {
-            list-style-type: none;
-        }
-        .errors, .errorlist {
-            text-align: left;
-            color:#D01414;
-        }
-    </style>
+    <link rel='stylesheet' href="{% static 'css/quiz.css' %}">
 {% endblock %}
 
-{% block main %}
-    <div class='row'>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-            <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>    
-                <form action='' method='post'>
-                    {% csrf_token %}
-                    {% if form.errors.question_1 %}
-                        <p class='errors'>{{ form.errors.question_1 }}</p>
-                    {% elif form.errors.question_2 %}
-                        <p class='errors'>{{ form.errors.question_2 }}</p>
-                    {% elif form.errors %}
-                        <p class='errors'>{{ form.errors }}</p>
-                    {% endif %}
-                    <p class='question'>In what role are you doing this career matching?</p>
-                    <div class='choices'>{{ form.question_type }}</div>
-                    <br>
-                    <p class='question'>Mark the <b>THREE</b> most important factors for your future career satisfaction.</p>
-                    <div class='choices'>{{ form.question_1 }}</div>
-                    <br>
-                    <p class='question'>Mark <b>TWO</b> areas you are most interested in.</p>
-                    <div class='choices'>{{ form.question_2 }}</div>
-                    <input class='button' type='submit' name='Submit' value='Get Results!'/> 
-                </form>
-            </div>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-    </div>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+{% block main %}  
+    <form action='' method='post'>
+        {% csrf_token %}
+        {% if form.errors.question_1 %}
+            <p class='error'>{{ form.errors.question_1 }}</p>
+        {% elif form.errors.question_2 %}
+            <p class='error'>{{ form.errors.question_2 }}</p>
+        {% elif form.errors %}
+            <p class='error'>{{ form.errors }}</p>
+        {% endif %}
+        <p>In what role are you doing this career matching?</p>
+        <div>{{ form.question_type }}</div>
+        <br>
+        <p>Mark the <strong>THREE</strong> most important factors for your future career satisfaction:</p>
+        <div>{{ form.question_1 }}</div>
+        <br>
+        <p>Mark <strong>TWO</strong> areas you are most interested in:</p>
+        <div>{{ form.question_2 }}</div>
+        <div class="centered-div">
+            <input class='aps-btn' type='submit' name='Submit' value='Get Results!'/> 
+        </div>
+    </form>
 {% endblock %}

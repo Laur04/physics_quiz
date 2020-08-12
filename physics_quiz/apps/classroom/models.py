@@ -27,7 +27,7 @@ class Post(models.Model):
     background_color = models.CharField(max_length=10)
 
     def __str__(self):
-        return self.student_name
+        return self.name
 
     def changeStatus(self):
         if self.hidden == True:

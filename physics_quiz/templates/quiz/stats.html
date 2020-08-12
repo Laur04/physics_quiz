@@ -1,35 +1,14 @@
-{% extends "base.html" %}
+{% extends "base_with_head.html" %}
 
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        .main1 {
-            background-color:rgba(138, 84, 168, .6);
-        }
-        .main2 {
-            background-color:#9bc1b4;
-        }
-        .main3 {
-            background-color:#c5dafc;
-        }
-        .button {
-            width:100%;
-            margin:10px;
-            font-size:120%;
-            background-color:#9bc1b4;
-        }
-    </style>
+    <link rel='stylesheet' href="{% static 'css/quiz.css' %}">
     <script>
         window.onload = function () {
 
         var chart = new CanvasJS.Chart("chartContainer2", {
             animationEnabled: true,
-            title:{
-                text: "Question 2 Answers",
-                horizontalAlign: "left"
-            },
             data: [{
                 type: "doughnut",
                 startAngle: 60,
@@ -56,10 +35,6 @@
 
         var chart = new CanvasJS.Chart("chartContainer1", {
             animationEnabled: true,
-            title:{
-                text: "Question 1 Answers",
-                horizontalAlign: "left"
-            },
             data: [{
                 type: "doughnut",
                 startAngle: 60,
@@ -84,31 +59,22 @@
 {% endblock %}
 
 {% block main %}
-    <div class='main1'>
-        <div class='row' style='padding-left:15px'>
-            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-                <div id="chartContainer1" style="height: 370px; width: 95%;margin-top:10px;"></div>
-            </div>
-            <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
-                <div id="chartContainer2" style="height: 370px; width: 95%;margin-top:10px;"></div>
-            </div>
+    <div class='row'>
+        <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+            <p class="header-1">Question 1 Answers</p>
+            <div id="chartContainer1" class="chart"></div>
+        </div>
+        <div class='col-lg-6 col-md-6 col-sm-12 col-xs-12'>
+            <p class="header-1">Question 2 Answers</p>
+            <div id="chartContainer2" class="chart"></div>
         </div>
     </div>
-    <div class='row' style='text-align:center;background-color:rgba(138, 84, 168, .6);'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <a href="{% url 'quiz:getfile' %}"><button class='button'>Download CSV</button></a>
-        </div>
-    </div>
-    <div class='row' style='text-align:center;background-color:rgba(138, 84, 168, .6);'>
-        <div class='col-lg-12 col-md-12 col-sm-12 col-xs-12'>
-            <form action='' method='post'>
-                {% csrf_token %}
-                <input class='button' onclick="return confirm('Are you sure that you want to delete all statistics?')" type='submit' name='Submit' value='Reset Data'/>    
-            </form>
-        </div>
+    <div class='centered-div'>
+        <a href="{% url 'quiz:getfile' %}"><button class='aps-btn'>Download CSV</button></a>
+        <form action='' method='post'>
+            {% csrf_token %}
+            <input class='aps-btn' onclick="return confirm('Are you sure that you want to delete all statistics?')" type='submit' name='Submit' value='Reset Data'/>    
+        </form>
     </div>
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 {% endblock %}

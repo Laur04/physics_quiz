@@ -26,6 +26,7 @@ def create(request):
             repeat_c = False
             repeat_t = False
             repeat_s = False
+            repeat = False
             current_users = User.objects.all()
             for t in current_users:
                 if t.username == form.cleaned_data['teacher_username']:
@@ -36,8 +37,10 @@ def create(request):
             for c in current_classes:
                 if c.name == class_name:
                     repeat_c = True
-            if repeat_c or repeat_s or repeat_t:
-                return render(request, 'classroom/create.html', context={'form':form, 'repeat_c':repeat_c, 'repeat_t':repeat_t, 'repeat_s':repeat_s})
+            if form.cleaned_data['teacher_username'] == form.cleaned_data["student_username"]:
+                repeat = True
+            if repeat_c or repeat_s or repeat_t or repeat:
+                return render(request, 'classroom/create.html', context={'form':form, 'repeat_c':repeat_c, 'repeat_t':repeat_t, 'repeat_s':repeat_s, 'repeat':repeat})
 
             # create class
             new_teacher = User.objects.create_user(form.cleaned_data['teacher_username'], form.cleaned_data['teacher_email'], form.cleaned_data['teacher_password'])

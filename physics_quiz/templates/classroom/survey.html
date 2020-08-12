@@ -1,70 +1,30 @@
-{% extends "base.html" %}
+{% extends "base_with_head.html" %}
 
 {% load static %}
 
 {% block head %}
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <style>
-        .main {
-            text-align:center;
-            padding:20px;
-            background-color: rgba(138, 84, 168, .6);
-            vertical-align: text-top;
-        }
-        .welcome {
-           font-size:160%;
-           margin-top:30px;
-        }
-        .ref_img {
-            width:95%;
-            padding-top:40px;
-        }
-        .button {
-            width:100%;
-            padding:10px;
-            margin-top:40px;
-            margin-bottom:30px;
-            font-size:120%;
-            background-color: #9bc1b4;
-        }
-        .question {
-            font-size: 20px;
-            text-align: center;
-        }
-        textarea {
-            width: 70%;
-            height: 70px;
-        }
-    </style>
+    <link rel='stylesheet' href="{% static 'css/classroom.css' %}">
 {% endblock %}
 
 {% block main %}
-    <div class='row'>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-            <div class='main col-lg-10 col-md-10 col-sm-10 col-xs-12'>
-                <form action='' method='post' enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <p class='question'>Name:  {{ form.name }}</p>
-                    <p class='question'>Company:  {{ form.company }}</p>
-                    <p class='question'>Position:  {{ form.position }}</p>
-                    <p class='question'>Profile Picture:  {{ form.profile_pic }}</p>
-                    <p class='question'>Background Color:  {{ form.background_color }}</p>
-                    <p class='question'>Work Location:  {{ form.location }}</p>
-                    <p class='question'>College:  {{ form.school }}</p>
-                    <p class='question'>Degree:  {{ form.degree }}</p>
-                    <p class='question'>Experience:  {{ form.experience }}</p>
-                    <p class='question'>Skills:  {{ form.skills }}</p>
-                    <p class='question'>Endorsements:  {{ form.endorsements }}</p>
-                    <input class='button' type='submit' name='Submit' value='Submit'/> 
-                </form>
-                {% if error %}
-                    <p>{{ form.errors }}</p>
-                {% endif %}
-            </div>
-        <div class='col-lg-1 col-md-1 col-sm-1'></div>
-    </div>
-    
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <form action='' method='post' enctype="multipart/form-data">
+        {% csrf_token %}
+        <p>Name:  {{ form.name }}</p>
+        <p>Company:  {{ form.company }}</p>
+        <p>Position:  {{ form.position }}</p>
+        <p>Profile Picture:  {{ form.profile_pic }}</p>
+        <p>Background Color:  {{ form.background_color }}</p>
+        <p>Work Location:  {{ form.location }}</p>
+        <p>College:  {{ form.school }}</p>
+        <p>Degree:  {{ form.degree }}</p>
+        <p>Experience:  {{ form.experience }}</p>
+        <p>Skills:  {{ form.skills }}</p>
+        <p>Endorsements:  {{ form.endorsements }}</p>
+        <div class="centered-div">
+            <input class='aps-btn' type='submit' name='Submit' value='Submit'/> 
+        </div>
+    </form>
+    {% if error %}
+        <p class='error'>{{ form.errors }}</p>
+    {% endif %}
 {% endblock %}

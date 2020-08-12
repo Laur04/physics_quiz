@@ -83,7 +83,7 @@ def listing(request):
 @login_required
 def statistics(request):
     user = request.user
-    if user.username == "site_superuser" or user.username == "site_staff":
+    if user.username == "site_superuser" or user.username == "site_staff" or user.is_superuser:
         opts = Option.objects.all()
         if request.method == 'POST':
             for o in opts:

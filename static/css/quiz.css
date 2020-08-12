@@ -1,0 +1,24 @@
+li {
+    list-style: none;
+}
+
+.profile-img {
+    width: 70%;
+    max-width: 350px;
+}
+
+.profile-info {
+    font-size: 25px;
+}
+
+.profile-link {
+    color: #126479;
+}
+
+.profile-link:hover {
+    color: #9bc1b4;
+}
+
+.chart {
+    height: 500px;
+}
