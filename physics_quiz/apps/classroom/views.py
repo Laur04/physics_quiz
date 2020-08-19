@@ -13,14 +13,14 @@ from .forms import CreateForm, SurveyForm, StudentResetForm
 from .models import Classes, Post
 
 from weasyprint import HTML
+from slugify import slugify
 import tempfile
 
 def create(request):
     if request.method == 'POST':
         form = CreateForm(request.POST)
         if form.is_valid():
-            class_name = form.cleaned_data['class_name'].split(' ')
-            class_name = ''.join(class_name)
+            class_name = slugify(form.cleaned_data['class_name'])
 
             # check
             repeat_c = False
@@ -90,9 +90,8 @@ def response(request):
         if form.is_valid():
             find_class = Classes.objects.get(name=classname)
 
-            new_id = form.cleaned_data['name'] + form.cleaned_data['position'] + form.cleaned_data['location']
-            new_id = new_id.split()
-            new_id = "".join(new_id)[:40]
+            new_id = slugify(form.cleaned_data['name'] + form.cleaned_data['position'] + form.cleaned_data['location'])
+            new_id = new_id[:40]
             
             colors = ["red", "blue", "purple", "yellow", "green"]
 
