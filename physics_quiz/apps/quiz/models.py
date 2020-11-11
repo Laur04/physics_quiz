@@ -5,7 +5,7 @@ from multiselectfield import MultiSelectField
 class Profile(models.Model):
 
     q1_choices = ((1, 'Making money'), (2, 'Helping other people'), (3, 'Having job security'), (4, 'Working with people'), (5, 'Having lots of family time'), (6, 'Having an exciting job'), (7, 'Making use of my talents/abilities'))
-    q2_choices = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'))
+    q2_choices = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'), ('l', 'Technology/Computer Science'), ('m', 'Law'))
 
     name = models.CharField('Name', unique=True, max_length=100)
     job = models.CharField('Job Title', max_length=100)
@@ -26,7 +26,7 @@ class Profile(models.Model):
         return num_list
 
     def q2_convert(self):
-        q2_dict = {'Medicine/Health':'a', 'Biology':'b', 'Chemistry':'c', 'Physics':'d', 'Astronomy':'e', 'Engineering':'f', 'English/Writing':'g', 'Finance/Business/Consultancy':'h', 'Administration/Management':'i', 'Arts/Media':'j', 'Academia/Education':'k'}
+        q2_dict = {'Medicine/Health':'a', 'Biology':'b', 'Chemistry':'c', 'Physics':'d', 'Astronomy':'e', 'Engineering':'f', 'English/Writing':'g', 'Finance/Business/Consultancy':'h', 'Administration/Management':'i', 'Arts/Media':'j', 'Academia/Education':'k', 'Technology/Computer Science':'l', 'Law':'m'}
         num_list = list()
         for i in str(self.q2_answer).split(', '):
             num_list.append(q2_dict[i])
@@ -42,14 +42,14 @@ class Profile(models.Model):
         for num in q2:
             if num in me_ans:
                 common.append(num)
-        back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education'}
+        back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education', 'l':'Technology/Computer Science', 'm':'Law'}
         common_word = list()
         for num in common:
             common_word.append(back_dict[num])
         return common_word
 
 class Option(models.Model):
-    answers = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'), ('1', 'Making money'), ('2', 'Helping other people'), ('3', 'Having job security'), ('4', 'Working with people'), ('5', 'Having lots of family time'), ('6', 'Having an exciting job'), ('7', 'Making use of my talents/abilities'))
+    answers = (('a', 'Medicine/Health'), ('b', 'Biology'), ('c', 'Chemistry'), ('d', 'Physics'), ('e', 'Astronomy'), ('f', 'Engineering'), ('g', 'English/Writing'), ('h', 'Finance/Business/Consultancy'), ('i', 'Administration/Management'), ('j', 'Arts/Media'), ('k', 'Academia/Education'), ('l', 'Technology/Computer Science'), ('m', 'Law'), ('1', 'Making money'), ('2', 'Helping other people'), ('3', 'Having job security'), ('4', 'Working with people'), ('5', 'Having lots of family time'), ('6', 'Having an exciting job'), ('7', 'Making use of my talents/abilities'))
 
     name = models.CharField('Name', unique=True, max_length=1, primary_key=True, choices=answers)
     o_1 = models.IntegerField('Frequency O1', default=0)
@@ -108,6 +108,10 @@ class Option(models.Model):
             self.o_j = self.o_j + 1
         elif ans == 'k':
             self.o_k = self.o_k + 1
+        elif ans == 'l':
+            self.o_k = self.o_k + 1
+        elif ans == 'm':
+            self.o_k = self.o_k + 1
         self.save()
     
     def reset(self):
@@ -132,7 +136,7 @@ class Option(models.Model):
         self.save()
     
     def self_count(self, who):
-        answers = {'a':('Medicine/Health', self.o_a), 'b':('Biology', self.o_b), 'c':('Chemistry', self.o_c), 'd':('Physics', self.o_d), 'e':('Astronomy', self.o_e), 'f':('Engineering', self.o_f), 'g':('English/Writing', self.o_g), 'h':('Finance/Business/Consultancy', self.o_h), 'i':('Administration/Management', self.o_i), 'j':('Arts/Media', self.o_j), 'k':('Academia/Education', self.o_k), '1':('Making money', self.o_1), '2':('Helping other people', self.o_2), '3':('Having job security', self.o_3), '4':('Working with people', self.o_4), '5':('Having lots of family time', self.o_5), '6':('Having an exciting job', self.o_6), '7': ('Making use of my talents/abilities', self.o_7)}
+        answers = {'a':('Medicine/Health', self.o_a), 'b':('Biology', self.o_b), 'c':('Chemistry', self.o_c), 'd':('Physics', self.o_d), 'e':('Astronomy', self.o_e), 'f':('Engineering', self.o_f), 'g':('English/Writing', self.o_g), 'h':('Finance/Business/Consultancy', self.o_h), 'i':('Administration/Management', self.o_i), 'j':('Arts/Media', self.o_j), 'k':('Academia/Education', self.o_k), 'l':('Technology/Computer Science', self.o_l), 'm':('Law', self.o_m), '1':('Making money', self.o_1), '2':('Helping other people', self.o_2), '3':('Having job security', self.o_3), '4':('Working with people', self.o_4), '5':('Having lots of family time', self.o_5), '6':('Having an exciting job', self.o_6), '7': ('Making use of my talents/abilities', self.o_7)}
         return answers[who]
 
     def __str__(self):
