@@ -70,6 +70,8 @@ class Option(models.Model):
     o_i = models.IntegerField('Frequency Oi', default=0)
     o_j = models.IntegerField('Frequency Oj', default=0)
     o_k = models.IntegerField('Frequency Ok', default=0)
+    o_l = models.IntegerField('Frequency Ol', default=0)
+    o_m = models.IntegerField('Frequency Om', default=0)
 
     def increment(self, ans):
         if ans == '1':
