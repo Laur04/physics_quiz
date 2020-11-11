@@ -34,7 +34,7 @@ def survey(request):
                         opt.increment(str(related))
                 
                 # update for csv file
-                back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education'}
+                back_dict = {'1':'Making money', '2':'Helping other people', '3': 'Having job security', '4': 'Working with people', '5': 'Having lots of family time', '6': 'Having an exciting job', '7': 'Making use of my talents/abilities', 'a': 'Medicine/Health', 'b': 'Biology', 'c': 'Chemistry', 'd': 'Physics', 'e': 'Astronomy', 'f': 'Engineering', 'g': 'English/Writing', 'h': 'Finance/Business/Consultancy', 'i': 'Administration/Management', 'j': 'Arts/Media', 'k': 'Academia/Education', 'l': 'Technology/Computer Science', 'm': 'Law'}
                 new_ans = Answer(ans=back_dict[str(q1_ans[0])] + ',' + back_dict[str(q1_ans[1])] + ',' + back_dict[str(q1_ans[2])] + ',' + back_dict[str(q2_ans[0])] + ',' + back_dict[str(q2_ans[1])])
                 new_ans.save()
             
